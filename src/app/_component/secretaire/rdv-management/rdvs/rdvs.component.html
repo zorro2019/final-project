@@ -1,0 +1,218 @@
+<h2 class="text-center text-primary font-weight-bold">Gestion Rendez-vous</h2>
+<div class="container">
+    <div class="card">
+        <p class="card-header bg-danger text-white font-weight-bold">La liste de tous les services de hopital <i (click)="hideServices()" type="button" class="pull-right fas fa-list-ul"></i><i type="button" class="fas fa-calendar pull-right mr-3" (click)="showRdv()"></i></p>
+        <div *ngIf="hideRdv && hideListService && hideListMedecin && hideEmploi" class="card-body">
+            <h5 class="ml-2 font-weight-bold">Les rdv prises</h5>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" alt="">
+            <p *ngIf="externalEvents.length === 0"><em class="ml-3">plus de rendez_vous</em></p>
+            <ul>
+                <li class="mb-1" mwlDroppable
+                    (drop)="externalDrop($event.dropData.event)"
+                    dragOverClass="drag-over"
+                    *ngFor="let event of externalEvents"
+                >
+                                    <span
+                                            mwlDraggable
+                                            [dropData]="{event: event}"
+                                            dragActiveClass="drag-active"
+                                            (dragPointerDown)="showRdvDetail(event.id)"
+                                    >
+                                        <a href="javascript:void(0)">{{event.title}}</a>
+                                    </span>&nbsp;&nbsp;
+                    <span><button data-toggle="modal" data-target="#exampleModal" class="btn-dark" (click)="showRdvDetail(event.id)" >Detail</button></span>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body" *ngIf="!hideListService">
+            <ul class="card-columns ml-3">
+                <li class="list-unstyled" *ngFor="let service of services" style="overflow: auto;">
+                    <button (click)="showService(service.id)" class="btn btn-success" style="width: 200px">{{service.libelle}}</button>
+                </li>
+            </ul>
+        </div>
+        <div class="card" *ngIf="!hideListMedecin">
+            <h5 class="text-primary mt-2 ml-2 font-weight-bold">La liste des medecins de {{service.libelle}}</h5>
+            <div class="card-body">
+                <ul class="card-columns ml-3">
+                    <li class="list-unstyled" *ngFor="let md of medecins" style="overflow: auto;">
+                        <button (click)="showMedecinEmploi(md.id)" style="width: 200px;" class="btn btn-success">Dr. {{md.nom}} {{md.prenom}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card" *ngIf="!hideEmploi">
+            <h5 class="text-primary mt-5 ml-2 mb-3 font-weight-bold">L'emploi du temps de Dr.{{medecin.nom}} {{medecin.prenom}}  medecin au service de {{service.libelle}}</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mt-5">
+                        <div *ngIf="!hideRdv" class="card">
+                            <h5 class="ml-2 font-weight-bold">Les rdv prises</h5>
+                            <p *ngIf="externalEvents.length === 0"><em class="ml-3">Plus de rendez-vous !</em></p>
+                            <ul>
+                                <li class="mb-1" mwlDroppable
+                                    (drop)="externalDrop($event.dropData.event)"
+                                    dragOverClass="drag-over"
+                                        *ngFor="let event of externalEvents"
+                                >
+                                    <span
+                                            mwlDraggable
+                                            [dropData]="{event: event}"
+                                            dragActiveClass="drag-active"
+                                            (dragPointerDown)="showRdvDetail(event.id)"
+                                    >
+                                        <a href="javascript:void(0)">{{event.title}}</a>
+                                    </span>&nbsp;&nbsp;
+                                    <span><button data-toggle="modal" data-target="#exampleModal" class="btn-dark" (click)="showRdvDetail(event.id)" >Detail</button></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-9" *ngIf="!hideEmploi" >
+                        <div class="row text-center col-md-12">
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <button
+                                            class="btn btn-primary"
+                                            mwlCalendarPreviousView
+                                            [view]="view"
+                                            [(viewDate)]="viewDate"
+                                    >
+                                        Previous
+                                    </button>
+                                    <button
+                                            class="btn btn-outline-secondary"
+                                            mwlCalendarToday
+                                            [(viewDate)]="viewDate"
+                                    >
+                                        Today
+                                    </button>
+                                    <button
+                                            class="btn btn-primary"
+                                            mwlCalendarNextView
+                                            [view]="view"
+                                            [(viewDate)]="viewDate"
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>
+                                    {{ viewDate | calendarDate:(view + 'ViewTitle'):locale:weekStartsOn }}
+                                </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div
+                                            class="btn btn-primary"
+                                            (click)="setView(CalendarView.Month)"
+                                            [class.active]="view === CalendarView.Month"
+                                    >
+                                        Month
+                                    </div>
+                                    <div
+                                            class="btn btn-primary"
+                                            (click)="setView(CalendarView.Week)"
+                                            [class.active]="view === CalendarView.Week"
+                                    >
+                                        Week
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div [ngSwitch]="view">
+                            <mwl-calendar-month-view
+                                    *ngSwitchCase="'month'"
+                                    [viewDate]="viewDate"
+                                    [events]="events"
+                                    [locale]="locale"
+                                    [weekStartsOn]="weekStartsOn"
+                                    [weekendDays]="weekendDays"
+                                    [activeDayIsOpen]="activeDayIsOpen"
+                                    [refresh]="refresh"
+                                    (eventClicked)="eventClicked($event)"
+                            >
+                            </mwl-calendar-month-view>
+                            <mwl-calendar-week-view
+                                    *ngSwitchCase="'week'"
+                                    [viewDate]="viewDate"
+                                    [events]="events"
+                                    [locale]="locale"
+                                    [weekStartsOn]="weekStartsOn"
+                                    [weekendDays]="weekendDays"
+                                    [refresh]="refresh"
+                                    [snapDraggedEvents]="false"
+                                    (eventTimesChanged)="eventDropped($event)"
+                                    [hourSegments]="4"
+                                    [dayEndHour]="18"
+                                    [dayStartHour]="8"
+                                    [dayEndMinute]="0"
+                                    [dayStartMinute]="0"
+                                    (eventClicked)="eventClicked($event)"
+                            >
+                            </mwl-calendar-week-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title font-weight-bold ml-5" id="exampleModalLabel">DETAIL</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <div class="col-md-12">
+                       <h5 class="font-weight-bold">Info patient :</h5>
+                       <ul class="font-weight-bold list-group list-unstyled">
+                           <li class="list-group-item-danger mb-1"><span class="ml-2">Nom : {{rdvPatient.nom}}</span></li>
+                           <li class="list-group-item-danger mb-1"><span class="ml-2">Prenom : {{rdvPatient.prenom}}</span></li>
+                       </ul>
+                   </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <h5 class="font-weight-bold">Info RDV</h5>
+                        <ul class="font-weight-bold list-group list-unstyled">
+                            <li class="list-group-item-danger mb-1"><span class="ml-2">Service : {{serviceRdv.libelle}}</span></li>
+                            <li class="list-group-item-danger mb-1"><span class="ml-2">Date rdv : {{rdvGetting.date}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal"><i class="fas fa-close"></i>&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

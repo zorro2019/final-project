@@ -1,0 +1,85 @@
+<mat-sidenav mode="out" opened>
+  <mat-tab-group>
+    <mat-tab label="AUTORITES">
+      <mat-nav-list>
+        <h4 class="float-left mt-3 ml-5 font-weight-bold text-secondary mb-3"><i class="fas fa-hospital-symbol"></i>&nbsp;
+          LISTES ROLES</h4>
+        <div class="bd-example pull-right mb-3">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            <i class="fas fa-plus"></i>&nbsp;AJOUTER NOUVEAU
+          </button>
+        </div>
+        <table class="table table-striped mb-0">
+          <thead>
+          <tr class="text-white" bgcolor="#073642">
+            <th scope="row" class="font-weight-bold text-center">ID</th>
+            <th class="th-lg font-weight-bold text-center">ROLE </th>
+            <th class="th-lg font-weight-bold text-center">VOIR</th>
+            <th class="th-lg font-weight-bold text-center">EDITER</th>
+            <th class="th-lg font-weight-bold text-center">SUPPRIMER</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of tableData; let i = index">
+            <th class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex" scope="row">{{data.id}}</th>
+            <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">{{data.libelle}}</td>
+            <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+              <a routerLink="/admin/user/{{data.id}}"><button class="btn-primary"><i class="fas fa-eye"></i></button></a>
+            </td>
+            <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+              <a routerLink="/admin/user/{{data.id}}"><button class="btn-success"><i class="fas fa-edit"></i></button></a>
+            </td>
+            <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+              <a routerLink="/admin/user/{{data.id}}"><button class="btn-danger"><i class="fas fa-trash"></i></button></a>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td class="text-center justify-content-center" colspan="5">
+              <ul class="pull-right pagination pagination-circle pg-purple mb-0">
+
+                <!--First-->
+                <li class="page-item clearfix d-none d-md-block" (click)="firstPage()" [ngClass]="{disabled: activePage == 1}">
+                  <a class="page-link">First</a>
+                </li>
+
+                <!--Arrow left-->
+                <li class="page-item" (click)="previousPage()" [ngClass]="{disabled: activePage == 1}">
+                  <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true" class="text-primary">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+
+                <!--Numbers-->
+                <li #pages *ngFor="let page of paginators | slice:firstVisiblePaginator:lastVisiblePaginator; let i = index" class="page-item"
+                    [ngClass]="{active: i + firstVisiblePaginator + 1 == activePage}">
+                  <a class="page-link waves-light bg-primary" (click)="changePage($event)" mdbWavesEffect>{{page}}</a>
+                </li>
+
+
+
+                <!--Arrow right-->
+                <li class="page-item" (click)="nextPage()" [ngClass]="{disabled: activePage == numberOfPaginators}">
+                  <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true" class="text-primary">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+
+                <!--First-->
+                <li class="page-item clearfix d-none d-md-block" (click)="lastPage()" [ngClass]="{disabled: activePage == numberOfPaginators}">
+                  <a class="page-link">Last</a>
+                </li>
+
+              </ul>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </mat-nav-list>
+    </mat-tab>
+  </mat-tab-group>
+</mat-sidenav>
+

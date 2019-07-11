@@ -1,0 +1,146 @@
+<div class="container">
+  <div class="col-md-6 offset-md-3" [hidden]="!hideForm">
+    <p class="text-center text-center alert alert-success mt-5">Modification effectuée</p>
+  </div>
+  <form class="col-md-12" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="form-group">
+      <label for="nom-user" class="font-weight-bold">Nom</label>
+      <input id="nom-user" type="text" class="form-control" name="nom"
+             formControlName="nom" [ngClass]="{ 'is-invalid': editForm.get('nom').errors }">
+      <div *ngIf="editForm.get('nom').invalid && (editForm.get('nom').dirty || editForm.get('nom').touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get('nom').errors.required">
+                le nom est obligatoire
+        </small>
+        <small class="form-text text-danger"
+               *ngIf="editForm.get('nom').errors.minLength">
+          la taille est trop courte
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="prenom-user" class="font-weight-bold">Prenom</label>
+        <input type="text" id="prenom-user" class="form-control" name="prenom" formControlName="prenom"
+               [ngClass]="{'is-invalid': editForm.get('prenom').errors}">
+        <div *ngIf="editForm.get('prenom').invalid && (editForm.get('prenom').dirty || editForm.get('prenom').touched)">
+          <small class="text-danger" *ngIf="editForm.get('prenom').errors.required">
+            le prenom est obligatoire
+          </small>
+          <small class=" text-danger" *ngIf="editForm.get('prenom').errors.minLength">
+            la taille est trop courte
+          </small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="username-user" class="font-weight-bold">USERNAME :</label>
+        <input id="username-user" class="form-control" placeholder="USERNAME" formControlName="username" [ngClass]="{'is-invalid': editForm.get('username').errors}">
+        <div *ngIf="editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)">
+          <small class="text-danger" *ngIf="editForm.get('username').errors.required">
+            username est obligatoire
+          </small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mat-user" class="font-weight-bold">MATRICULE :</label>
+        <input id="mat-user" class="form-control" placeholder="MATRICULE"
+               formControlName="matricule" [ngClass]="{ 'is-invalid':editForm.get('matricule').errors }">
+        <div *ngIf="editForm.get('matricule').invalid && (editForm.get('matricule').dirty || editForm.get('matricule').touched)">
+          <small class="text-danger" *ngIf="editForm.get('matricule').errors.required">
+            le matricule est obligatoire
+          </small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="role-user" class="font-weight-bold">ROLES :</label>
+        <select id="role-user"  class="form-control" formControlName="role" multiple>
+          <option *ngFor="let role of roles" [value]="role">
+            {{role.libelle}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="src-user" class="font-weight-bold">SERVICE :</label>
+        <select id="src-user"  class="select-role form-control" formControlName="services" multiple>
+          <option *ngFor="let service of services" [value]="service">
+            {{service.libelle}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="formgroup">
+      <button  type="submit" class="btn btn-primary pull-right"
+               [disabled]="loading"><i class="fas fa-save"></i>&nbsp;valider
+      </button>
+      <img *ngIf="loading" class="pl-2"
+           src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  </form>
+  <!--<form [formGroup]="formAdd" (ngSubmit)="onSubmit()"-->
+        <!--class="form col-md-12" [hidden]="hideForm">-->
+    <!--<div fxLayout="column">-->
+      <!--<div class="form-group">-->
+        <!--<label for="nom" class="font-weight-bold">NOM :</label>-->
+        <!--<input id="nom" [value]="user.nom" value="{{user.nom}}" class="form-control" placeholder="NOM UTILISATEUR" formControlName="nom" required-->
+               <!--[ngClass]="{ 'is-invalid': submitted && f.nom.errors }">-->
+        <!--<div *ngIf="submitted && f.nom.errors" class="invalid-feedback">-->
+          <!--<div *ngIf="f.nom.errors.required">nom est obligatoire</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label for="prenom" class="font-weight-bold">PRENOM :</label>-->
+        <!--<input id="prenom" [value]="user.prenom" value="{{user.prenom}}" class="form-control" placeholder="PRENOM UTILISATEUR" formControlName="prenom"-->
+               <!--required-->
+               <!--[ngClass]="{ 'is-invalid': submitted && f.prenom.errors }">-->
+        <!--<div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">-->
+          <!--<div *ngIf="f.prenom.errors.required">prenom est obligatoire</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label for="username" class="font-weight-bold">USERNAME :</label>-->
+        <!--<input id="username" [value]="user.username" value="{{user.username}}" class="form-control" placeholder="USERNAME" formControlName="username"-->
+               <!--required-->
+               <!--[ngClass]="{ 'is-invalid': submitted && f.username.errors }">-->
+        <!--<div *ngIf="submitted && f.username.errors" class="invalid-feedback">-->
+          <!--<div *ngIf="f.username.errors.required">pseudo est obligtoire</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label for="mat" class="font-weight-bold">MATRICULE :</label>-->
+        <!--<input id="mat" class="form-control" value="{{user.matricule}}" placeholder="MATRICULE"-->
+               <!--formControlName="matricule" [value]="user.matricule" required-->
+               <!--[ngClass]="{ 'is-invalid': submitted && f.matricule.errors }">-->
+        <!--<div *ngIf="submitted && f.matricule.errors" class="invalid-feedback">-->
+          <!--<div *ngIf="f.matricule.errors.required">matricule est obligatoire-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label for="src" class="font-weight-bold">ROLES :</label>-->
+        <!--<select placeholder="Role" class="form-control" formControlName="role" required-->
+                <!--[ngClass]="{ 'is-invalid': submitted && f.role.errors }" multiple>-->
+          <!--<option *ngFor="let role of roles" [value]="role">-->
+            <!--{{role.libelle}}-->
+          <!--</option>-->
+        <!--</select>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label for="src" class="font-weight-bold">SERVICE :</label>-->
+        <!--<select id="src"  class="select-role form-control" formControlName="services" required-->
+                <!--[ngClass]="{ 'is-invalid': submitted && f.services.errors }"-->
+                <!--multiple>-->
+          <!--<option *ngFor="let service of services" [value]="service">-->
+            <!--{{service.libelle}}-->
+          <!--</option>-->
+        <!--</select>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="formgroup">-->
+      <!--<button  type="button" class="pull-left btn btn-secondary" data-dismiss="modal">Close</button>-->
+      <!--<button  type="submit" mat-button class="btn btn-primary pull-right"-->
+               <!--[disabled]="loading"><i class="fa fa-check"></i>&nbsp;Sign IN-->
+      <!--</button>-->
+      <!--<img *ngIf="loading" class="pl-2"-->
+           <!--src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>-->
+    <!--</div>-->
+    <!--<div *ngIf="error" class="alert alert-danger">{{error}}</div>-->
+  <!--</form>-->
+</div>

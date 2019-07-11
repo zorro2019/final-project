@@ -1,0 +1,290 @@
+<mat-sidenav mode="out" opened>
+    <mat-tab-group>
+        <mat-tab label="USERS">
+            <mat-nav-list>
+                <h4 class="float-left mt-3 ml-5 font-weight-bold text-secondary mb-3"><i class="fas fa-users"></i>&nbsp;
+                    LIST USERS</h4>
+                <div class="bd-example pull-right mb-3">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                        <i class="fas fa-plus"></i>&nbsp;AJOUTER NOUVEAU
+                    </button>
+                </div>
+                <table class="table table-striped mb-0">
+                    <thead>
+                    <tr class="text-white" bgcolor="#073642">
+                        <th scope="row" class="font-weight-bold text-center">ID</th>
+                        <th class="th-lg font-weight-bold text-center">NOM</th>
+                        <th class="th-lg font-weight-bold text-center">PRENOM</th>
+                        <th class="th-lg font-weight-bold text-center">MATRICULE</th>
+                        <th class="th-lg font-weight-bold text-center">USERNAME</th>
+                        <th class="th-lg font-weight-bold text-center">VOIR</th>
+                        <th class="th-lg font-weight-bold text-center">EDITER</th>
+                        <th class="th-lg font-weight-bold text-center">SUPPRIMER</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let data of tableData; let i = index">
+                        <th class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex" scope="row">{{data.id}}</th>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">{{data.nom}}</td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">{{data.prenom}}</td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">{{data.matricule}}</td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">{{data.username}}</td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+                            <a routerLink="/admin/user/{{data.id}}"><button class="btn-primary"><i class="fas fa-eye"></i></button></a>
+                        </td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+                            <a routerLink="/admin/edit-user/{{data.id}}"><button class="btn-success"><i class="fas fa-edit"></i></button></a>
+                        </td>
+                        <td class="font-weight-bold text-center" *ngIf="data.id >= firstVisibleIndex && data.id <= lastVisibleIndex">
+                            <a routerLink="/admin/delete-user/{{data.id}}"><button class="btn-danger"><i class="fas fa-trash"></i></button></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-center justify-content-center" colspan="8">
+                                <ul class="pull-right pagination pagination-circle pg-purple mb-0">
+
+                                    <!--First-->
+                                    <li class="page-item clearfix d-none d-md-block" (click)="firstPage()" [ngClass]="{disabled: activePage == 1}">
+                                        <a class="page-link">First</a>
+                                    </li>
+
+                                    <!--Arrow left-->
+                                    <li class="page-item" (click)="previousPage()" [ngClass]="{disabled: activePage == 1}">
+                                        <a class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true" class="text-primary">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+
+                                    <!--Numbers-->
+                                    <li #pages *ngFor="let page of paginators | slice:firstVisiblePaginator:lastVisiblePaginator; let i = index" class="page-item"
+                                        [ngClass]="{active: i + firstVisiblePaginator + 1 == activePage}">
+                                        <a class="page-link waves-light bg-primary" (click)="changePage($event)" mdbWavesEffect>{{page}}</a>
+                                    </li>
+
+
+
+                                    <!--Arrow right-->
+                                    <li class="page-item" (click)="nextPage()" [ngClass]="{disabled: activePage == numberOfPaginators}">
+                                        <a class="page-link" aria-label="Next">
+                                            <span aria-hidden="true" class="text-primary">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+
+                                    <!--First-->
+                                    <li class="page-item clearfix d-none d-md-block" (click)="lastPage()" [ngClass]="{disabled: activePage == numberOfPaginators}">
+                                        <a class="page-link">Last</a>
+                                    </li>
+
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </mat-nav-list>
+        </mat-tab>
+    </mat-tab-group>
+</mat-sidenav>
+<div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="text-center modal-title text-primary font-weight-bold ml-5" id="exampleModalLongTitle"><i class="fas fa-user-cog"></i>&nbsp;NOUVEAU UTILISATEUR</h5>
+                <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-success text-center" [hidden]="!btn_alert">Utilisateur ajouté avec succes !</p>
+                <form [formGroup]="formAdd" (ngSubmit)="onSubmit()"
+                      class="form col-md-12" [hidden]="hideForm">
+                    <div fxLayout="column">
+                        <div class="form-group">
+                            <label for="nom" class="font-weight-bold">NOM :</label>
+                            <input id="nom" class="form-control" placeholder="NOM UTILISATEUR" formControlName="nom" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.nom.errors }">
+                            <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                                <div *ngIf="f.nom.errors.required">nom est obligatoire</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom" class="font-weight-bold">PRENOM :</label>
+                            <input id="prenom" class="form-control" placeholder="PRENOM UTILISATEUR" formControlName="prenom"
+                                   required
+                                   [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }">
+                            <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                                <div *ngIf="f.prenom.errors.required">prenom est obligatoire</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="font-weight-bold">USERNAME :</label>
+                            <input id="username" class="form-control" placeholder="USERNAME" formControlName="username"
+                                   required
+                                   [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required">pseudo est obligtoire</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mat" class="font-weight-bold">MATRICULE :</label>
+                            <input id="mat" class="form-control" placeholder="MATRICULE"
+                                   formControlName="matricule" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.matricule.errors }">
+                            <div *ngIf="submitted && f.matricule.errors" class="invalid-feedback">
+                                <div *ngIf="f.matricule.errors.required">matricule est obligatoire
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd" class="font-weight-bold">PASSWORD :</label>
+                            <input id="pwd" class="form-control" type="password" placeholder="MOT DE PASSE"
+                                   name="password" formControlName="password" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        </div>
+                        <label for="pwd2" class="font-weight-bold">REPEAT PASSWORD :</label>
+                        <div class="form-group">
+                            <input class="form-control" id="pwd2" type="password" placeholder="REPRENDRE MOT DE PASSE"
+                                   name="password" formControlName="password2" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.password2.errors }">
+                        </div>
+                        <div class="form-group">
+                            <select placeholder="Role" class="form-control" formControlName="role" required
+                                        [ngClass]="{ 'is-invalid': submitted && f.role.errors }" multiple>
+                                <option *ngFor="let role of roles" [value]="role">
+                                    {{role.libelle}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                                <div *ngIf="f.role.errors.required">role obligatoire</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="src" class="font-weight-bold">SERVICE :</label>
+                            <select id="src"  class="select-role form-control" formControlName="services" required
+                                    [ngClass]="{ 'is-invalid': submitted && f.services.errors }"
+                                    multiple>
+                                <option *ngFor="let service of services" [value]="service">
+                                    {{service.libelle}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.services.errors" class="invalid-feedback">
+                                <div *ngIf="f.services.errors.required">service obligatoire</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formgroup">
+                        <button  type="button" class="pull-left btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button  type="submit" mat-button class="btn btn-primary pull-right"
+                                [disabled]="loading"><i class="fa fa-check"></i>&nbsp;Sign IN
+                        </button>
+                        <img *ngIf="loading" class="pl-2"
+                             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                    </div>
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center text-primary">Copyright&copy;Hopital2019</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--
+<h4 class="mt-3 ml-5 mb-3 font-weight-bold text-secondary"><i
+                        class="fas fa-user-plus"></i>&nbsp;&nbsp;ADD USER</h4>
+                <div class="text-center alert alert-success alert-dismissible fade show"
+                     role="alert" [hidden]="!btn_alert">
+                    <strong>Utilisateur</strong> ajouté avec succes !
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="formAdd" (ngSubmit)="onSubmit()"
+                      class="form col-md-12" [hidden]="hideForm">
+                    <div fxLayout="column">
+                        <mat-form-field>
+                            <input matInput placeholder="VOTRE NOM" formControlName="nom" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.nom.errors }">
+                            <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                                <div *ngIf="f.nom.errors.required">nom est obligatoire</div>
+                            </div>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="VOTRE PRENOM" formControlName="prenom"
+                                   required
+                                   [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }">
+                            <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                                <div *ngIf="f.prenom.errors.required">prenom est obligatoire</div>
+                            </div>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="VOTRE PSEUDO" formControlName="username"
+                                   required
+                                   [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required">pseudo est obligtoire</div>
+                            </div>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="VOTRE MATRICULE"
+                                   formControlName="matricule" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.matricule.errors }">
+                            <div *ngIf="submitted && f.matricule.errors" class="invalid-feedback">
+                                <div *ngIf="f.matricule.errors.required">matricule est obligatoire
+                                </div>
+                            </div>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="password" matInput placeholder="MOT DE PASSE"
+                                   name="password" formControlName="password" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="password" matInput placeholder="REPRENDRE MOT DE PASSE"
+                                   name="password" formControlName="password2" required
+                                   [ngClass]="{ 'is-invalid': submitted && f.password2.errors }">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="Role" formControlName="role" required
+                                        [ngClass]="{ 'is-invalid': submitted && f.role.errors }"
+                                        multiple>
+                                <mat-option *ngFor="let role of roles" [value]="role">
+                                    {{role.libelle}}
+                                </mat-option>
+                            </mat-select>
+                            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                                <div *ngIf="f.role.errors.required">role obligatoire</div>
+                            </div>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="Service" formControlName="services" required
+                                        [ngClass]="{ 'is-invalid': submitted && f.services.errors }"
+                                        multiple>
+                                <mat-option *ngFor="let service of services" [value]="service">
+                                    {{service.libelle}}
+                                </mat-option>
+                            </mat-select>
+                            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                                <div *ngIf="f.role.errors.required">role obligatoire</div>
+                            </div>
+                        </mat-form-field>
+                        <div class="form-group">
+                            <button type="submit" mat-button class="btn btn-primary pull-right"
+                                    [disabled]="loading"><i class="fa fa-check"></i>&nbsp;Sign IN
+                            </button>
+                            <img *ngIf="loading" class="pl-2"
+                                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                        </div>
+                        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    </div>
+                </form>
+-->

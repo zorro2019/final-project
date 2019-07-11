@@ -1,0 +1,128 @@
+<h3 class="font-weight-bold text-primary"><i class="fa fa-angle-right"></i>&nbsp;ENREGISTRER UN RDV</h3>
+<div class="col-md-8 offset-md-2 mt-5" *ngIf="noFindedPatient">
+    <p class="alert alert-danger text-center">Pas de patient trouvé </p>
+</div>
+<div class="container col-md-12">
+    <form class="form-row align-items-center mt-5" [formGroup]="formFindPatient" (ngSubmit)="submitFind()">
+        <div class="offset-md-3 col-md-3 form-group">
+            <input type="text" class="form-control" formControlName="numeroPatient" placeholder="Saisir numero patient" [ngClass]="{ 'is-invalid': isSubmitFind && formFind.numeroPatient.errors }">
+        </div>
+        <div class="col-md-3 form-group pull-left">
+            <img *ngIf="loading" class="pl-2"
+            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+            &nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary"><i class="fas fa-search-plus"></i>&nbsp;find patient&nbsp;</button>
+        </div>
+    </form>
+    <div class="col-md-10 offset-md-1" *ngIf="findedPatient">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" disabled class="form-control" id="nom" [value]="patient.nom">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prenom">Prenom</label>
+                <input type="text" disabled class="form-control" id="prenom" [value]="patient.prenom">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="ad">Adresse</label>
+                <input type="text" disabled class="form-control" id="ad" [value]="patient.adresse">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="naiss">Date Naissance</label>
+                <input type="text" disabled class="form-control" id="naiss" [value]="patient.dateNaissance">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="text-center alert alert-success alert-dismissible fade show"-->
+     <!--role="alert" [hidden]="!btn_alert">-->
+    <!--<strong>Votre rdv</strong> a été ajouté avec succes !-->
+    <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+    <!--</button>-->
+<!--</div>-->
+<!--<form class="row mt-5" [formGroup]="formFindPatient" (ngSubmit)="onSubmitted()" [hidden]="btnAntecedant">-->
+    <!--<div class="offset-md-2 col-md-4">-->
+        <!--<div class="form-group">-->
+            <!--<input type="text" id="numero" placeholder="Numero patient" (click)="resetClicked()"-->
+                   <!--formControlName="numero" class="form-control"-->
+                   <!--[ngClass]="{ 'is-invalid': submitted && f1.numero.errors }"/>-->
+            <!--<div *ngIf="submitted && f1.numero.errors" class="invalid-feedback">-->
+                <!--<div *ngIf="f1.numero.errors.required">numero patient requis !</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+        <!--<img *ngIf="loading" class="pl-2"-->
+             <!--src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>-->
+        <!--&nbsp;&nbsp;-->
+        <!--<button [disabled]="loading" type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Find-->
+        <!--</button>-->
+    <!--</div>-->
+<!--</form>-->
+
+<!--<div *ngIf="error" class="offset-md-1 col-md-10 text-center alert alert-danger alert-dismissible fade show"-->
+     <!--role="alert" >-->
+    <!--<strong>Patient</strong> non trouvé !-->
+    <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+    <!--</button>-->
+<!--</div>-->
+<!--<div class="row" [hidden]="!hiddenPatient">-->
+    <!--<div class="offset-1 col-md-10">-->
+        <!--<h5 class="mt-3 text-primary">Patient</h5>-->
+        <!--<div class="form-row">-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="nom">Nom</label>-->
+                <!--<input type="text" id="nom" value="{{patient.nom}}" class="form-control font-weight-bold" disabled>-->
+            <!--</div>-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="prenom">Prenom</label>-->
+                <!--<input type="text" id="prenom" value="{{patient.prenom}}" class="form-control font-weight-bold"-->
+                       <!--disabled>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-row">-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="adresse">Adresse</label>-->
+                <!--<input type="text" id="adresse" value="{{patient.adresse}}" class="form-control font-weight-bold"-->
+                       <!--disabled>-->
+            <!--</div>-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="date">Date Naissance</label>-->
+                <!--<input type="text" id="date" value="{{patient.dateNaissance}}" class="form-control font-weight-bold"-->
+                       <!--disabled>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<form [formGroup]="formAddRdv" (ngSubmit)="onSubmittedAddRdv()" class="offset-1 col-md-10"-->
+          <!--[hidden]="!hiddenFormAddRdv">-->
+        <!--<h5 class="mt-3 text-primary">Rendez-vous</h5>-->
+        <!--<div class="form-row">-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="dateRdv">Date</label>-->
+                <!--<input type="date" id="dateRdv" formControlName="date" class="form-control font-weight-bold"-->
+                       <!--[ngClass]="{ 'is-invalid': submitted2 && f2.date.errors }">-->
+            <!--</div>-->
+            <!--<div class="form-group col-md-6">-->
+                <!--<label for="service">Service</label>-->
+                <!--<select id="service" class="form-control font-weight-bold" formControlName="service" required-->
+                        <!--[ngClass]="{ 'is-invalid': submitted2 && f2.service.errors }">-->
+                    <!--<option class="form-control" *ngFor="let service of services" value="{{service.id}}">-->
+                        <!--{{service.libelle}}-->
+                    <!--</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i><img *ngIf="loading"-->
+                                                                                                <!--class="pl-2"-->
+                                                                                                <!--src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>&nbsp;-->
+            <!--Enregistrer-->
+        <!--</button>-->
+    <!--</form>-->
+<!--</div>-->

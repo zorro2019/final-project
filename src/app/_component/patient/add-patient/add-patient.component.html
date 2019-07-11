@@ -1,0 +1,233 @@
+<div class="container col-md-12">
+    <h3 class="font-weight-bold text-primary mb-5 mt-4">
+        <i class="fas fa-angle-right"></i>&nbsp;NOUVEAU PATIENT&nbsp;<i class="text-danger fas fa-user-injured"></i>
+    </h3>
+    <button *ngIf="!hideLevel3" type="button" data-toggle="modal" data-target="#andAntecedant"
+            class="btn btn-primary pull-right" style="margin-top: -45px" (click)="btnNewClicked()"><i class="fas fa-plus"></i>&nbsp;antécédant
+    </button>
+    <form class="card col-md-10 offset-md-1" *ngIf="!hideLevel1" name="formLevel1" (ngSubmit)="submitLevel1()"
+          [formGroup]="formLevel1">
+        <div class="form-row align-content-end mt-3">
+            <div class="form-group col-md-6">
+                <label for="nom" class="font-weight-bold">Nom </label>
+                <input type="text" id="nom" class="form-control" formControlName="nom"
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.nom.errors }" required>
+                <div *ngIf="isSubmitLevel1 && fLevel1.nom.errors" class="invalid-feedback">
+                    Le nom est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prenom" class="font-weight-bold">Prenom</label>
+                <input id="prenom" class="form-control"
+                       formControlName="prenom" required
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.prenom.errors }">
+                <div *ngIf="isSubmitLevel1 && fLevel1.prenom.errors" class="invalid-feedback">
+                    Le prenom est obligatoire
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-content-end">
+            <div class="form-group col-md-6">
+                <label for="date" class="font-weight-bold">Date Naissance </label>
+                <input type="date" id="date" class="form-control" formControlName="dateNaissance"
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.dateNaissance.errors }" required>
+                <div *ngIf="isSubmitLevel1 && fLevel1.dateNaissance.errors" class="invalid-feedback">
+                    La date de naissance est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lieu" class="font-weight-bold">Lieu Naissance</label>
+                <input id="lieu" type="text" class="form-control"
+                       formControlName="lieuNaissance" required
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.lieuNaissance.errors }">
+                <div *ngIf="isSubmitLevel1 && fLevel1.lieuNaissance.errors" class="invalid-feedback">
+                    Le lieu de naissance est obligatoire
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-content-end">
+            <div class="form-group col-md-6">
+                <label for="adresse" class="font-weight-bold">Adresse </label>
+                <input type="text" id="adresse" class="form-control" formControlName="adresse"
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.adresse.errors }" required>
+                <div *ngIf="isSubmitLevel1 && fLevel1.adresse.errors" class="invalid-feedback">
+                    L'adresse est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="tel" class="font-weight-bold">Telephone</label>
+                <input id="tel" type="tel" class="form-control"
+                       formControlName="telephone" required
+                       [ngClass]="{ 'is-invalid': isSubmitLevel1 && fLevel1.telephone.errors }">
+                <div *ngIf="isSubmitLevel1 && fLevel1.telephone.errors" class="invalid-feedback">
+                    Le numero de telephone est obligatoire
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <img class="pull-right mt-2" *ngIf="laodingLevel1"
+                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                 alt="">
+            <button class="btn btn-primary pull-right" type="submit">suivant</button>
+        </div>
+    </form>
+    <form class="card col-md-10 offset-md-1" *ngIf="!hideLevel2" name="formLevel2" (ngSubmit)="submitLevel2()"
+          [formGroup]="formLevel2">
+        <div class="form-row align-content-end mt-3">
+            <div class="form-group col-md-6">
+                <label for="sexe" class="font-weight-bold">Sexe </label>
+                <select type="text" id="sexe" class="form-control" formControlName="sexe"
+                        [ngClass]="{ 'is-invalid': isSubmitLevel2 && fLevel2.sexe.errors }">
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                </select>
+                <div *ngIf="isSubmitLevel2 && fLevel2.sexe.errors" class="invalid-feedback">
+                    Le sexe est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prof" class="font-weight-bold">Profession</label>
+                <input id="prof" class="form-control" type="text"
+                       formControlName="profession">
+            </div>
+        </div>
+        <div class="form-row align-content-end">
+            <div class="form-group col-md-6">
+                <label for="mail" class="font-weight-bold">Email </label>
+                <input type="email" id="mail" class="form-control" formControlName="email"
+                       [ngClass]="{ 'is-invalid': isSubmitLevel2 && fLevel2.email.errors }" required>
+                <div *ngIf="isSubmitLevel2 && fLevel2.email.errors" class="invalid-feedback">
+                    L'email est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="situ" class="font-weight-bold">Situation Matrimoniale</label>
+                <select id="situ" class="form-control"
+                        formControlName="situationMatrimoniale">
+                    <option value="N/A">N/A</option>
+                    <option value="Marié">Marié</option>
+                    <option value="Célibataire">Célibataire</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row align-content-end">
+            <div class="form-group col-md-6">
+                <label for="gs" class="font-weight-bold">Groupe Sanguin :</label>
+                <input type="text" id="gs" class="form-control" formControlName="groupeSanguin"
+                       [ngClass]="{ 'is-invalid': isSubmitLevel2 && fLevel2.groupeSanguin.errors }" required>
+                <div *ngIf="isSubmitLevel2 && fLevel2.groupeSanguin.errors" class="invalid-feedback">
+                    Le Groupe sanguin est obligatoire
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="poids" class="font-weight-bold">Poids</label>
+                <input id="poids" class="form-control" type="number"
+                       formControlName="poids" required
+                       [ngClass]="{ 'is-invalid': isSubmitLevel2 && fLevel2.poids.errors }">
+                <div *ngIf="isSubmitLevel2 && fLevel2.poids.errors" class="invalid-feedback">
+                    Le poids est obligatoire
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <button class="btn btn-primary float-left" type="button" (click)="previewsLevel1()">precedant</button>
+            </div>
+            <div class="col-md-6">
+                <img class="float-right mt-2" *ngIf="laodingLevel2"
+                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                     alt="">
+                <button class="btn btn-primary float-right" type="submit">suivant</button>
+            </div>
+        </div>
+    </form>
+    <div class="card col-md-10 offset-md-1" *ngIf="!hideLevel3">
+        <div class="row col-md-12 mt-3">
+            <div class="col-md-5">
+                <h4 class="font-weight-bold text-primary"><i class="fas fa-list-ul"></i>&nbsp;Antecedants</h4>
+                <mat-selection-list #shoes [(ngModel)]="selectedOptions">
+                    <mat-list-option *ngFor="let ant of antecedants" [value]="ant">
+                        {{ant.description}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+            <div class="col-md-2 align-items-center text-center" style="margin-top: 160px;">
+                <button style="font-size: 30px" class="btn btn-primary" (click)="selectedValue()"><i
+                        class="fa fa-angle-right"></i></button>
+            </div>
+            <div class="col-md-5">
+                <h4 class="font-weight-bold mb-3 text-primary"><i class="fas fa-plus"></i>&nbsp;Nouveaux</h4>
+                <ul class="mt-1">
+                    <li *ngFor="let ant of newAntecedants" class="mb-4 display font-weight-bold">
+                        <i class="text-primary fa fa-hand-o-right"></i>&nbsp;{{ant.description}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 offset-md-1">
+            <button class="btn btn-primary float-left mt-3 mb-3" type="button" (click)="previewsLevel2()">precedant
+            </button>
+            <button class="btn btn-primary pull-right mt-3 mb-3" (click)="addAntecedant()"><i
+                    class="fas fa-save"></i>&nbsp;Enregistrer
+            </button>
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2 text-center" [hidden]="!btnAlert">
+        <p class="text-center alert alert-success">Patient ajouté avec succes ! </p>
+    </div>
+</div>
+
+
+<div class="modal fade" id="andAntecedant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" name="formNewAnt" (ngSubmit)="submitNewAnt()" [formGroup]="formNewAnt">
+            <div class="modal-header text-center">
+                <h5 class="modal-title text-center font-weight-bold" id="exampleModalLabel"><i
+                        class="fas fa-list-ul"></i>&nbsp;AJOUTER ANTECEDANT PERSONNALISER : </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-centert mb-3" [hidden]="!btnNewAdded">
+                    <p class="text-center alert alert-success">Antecedant ajouté avec succes !</p>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="font-weight-bold">Type </label>
+                    <select type="text" id="type" class="form-control" formControlName="type"
+                            [ngClass]="{ 'is-invalid': isSubmitNewAnt && fNewAnt.type.errors }">
+                        <option value="Antécédents medicaux et facteur de risque">Antécédents medicaux et facteur de risque</option>
+                        <option value="Antécédents chirurgicaux et obstétricaux">Antécédents chirurgicaux et obstétricaux</option>
+                        <option value="Antécédants familliaux">Antécédants familliaux</option>
+                        <option value="Allergie et intolerance">Allergie et intolerance</option>
+                    </select>
+                    <div *ngIf="isSubmitNewAnt && fNewAnt.type.errors" class="invalid-feedback">
+                        Le type est obligatoire *
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="des">Description</label>
+                    <input type="text" id="des" class="form-control" formControlName="description"
+                           [ngClass]="{ 'is-invalid': isSubmitNewAnt && fNewAnt.description.errors }">
+                    <div *ngIf="isSubmitNewAnt && fNewAnt.description.errors" class="invalid-feedback">
+                        La description est obligatoire *
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dt">Annee</label>
+                    <input type="number" id="dt" class="form-control" formControlName="date">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-danger" type="reset">Annuler</button>
+                <button type="submit" class="btn btn-primary"><i class="fas-fa-save"></i>&nbsp;Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

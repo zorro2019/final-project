@@ -1,0 +1,42 @@
+<div class="container" style="" id="del">
+    <h3 class="text-left ml-3 mb-5 text-danger font-weight-bold text-uppercase"> <i class="fas fa-angle-right"></i>&nbsp;Suppression d'un utilisateur</h3>
+    <ul class="list-group">
+        <li class="list-group-item font-weight-bold">Nom: {{user.prenom}} {{user.nom}}</li>
+        <br>
+        <li class="list-group-item font-weight-bold">Matricule : {{user.matricule}}</li>
+        <br>
+        <li class="list-group-item font-weight-bold">Role: <br>
+            <ul class="list-inline" style="list-style: none">
+                <li *ngFor="let r of roles">
+                    <button class="btn btn-success float-left">{{r.libelle}}</button>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <div class="bd-example">
+        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#exampleModalPopovers">
+            Supprimer
+        </button>
+    </div>
+    <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger ml-5" id="exampleModalPopoversLabel"><i class="fas fa-trash-alt"></i>&nbsp;SUPRESSION</h5>
+                    <button type="button" (click)="redirect()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p [hidden]="btn_alert" class="text-center font-weight-bold">Vous aller supprimer cet utilisateur. Êtes-vous de vous ?</p>
+                    <p [hidden]="!btn_alert" class="alert alert-success text-center">Suppression effectuée avec succes !</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="redirect()">Close</button>
+                    <button type="button" class="btn btn-danger" (click)="delete()">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,193 @@
+<div class="main mx-auto text-center">
+    <!--<mdb-carousel [isControls]="true" [animation]="'fade'" [interval]="5000">-->
+        <!--&lt;!&ndash;First slide&ndash;&gt;-->
+        <!--<mdb-carousel-item>-->
+            <!--<img class="carousel-img d-block w-100" src="../../../assets/img/img3.jpg" alt="First slide">-->
+        <!--</mdb-carousel-item>-->
+        <!--&lt;!&ndash;/First slide&ndash;&gt;-->
+        <!--&lt;!&ndash;Second slide&ndash;&gt;-->
+        <!--<mdb-carousel-item>-->
+            <!--<img class="carousel-img d-block w-100" src="../../../assets/img/img.jpg"alt="Second slide">-->
+        <!--</mdb-carousel-item>-->
+        <!--&lt;!&ndash;/Second slide&ndash;&gt;-->
+        <!--&lt;!&ndash;Third slide&ndash;&gt;-->
+        <!--<mdb-carousel-item>-->
+            <!--<img class="carousel-img d-block w-100" src="../../../assets/img/img2.jpg" alt="Third slide">-->
+        <!--</mdb-carousel-item>-->
+        <!--&lt;!&ndash;/Third slide&ndash;&gt;-->
+    <!--</mdb-carousel>-->
+    <!--&lt;!&ndash;/.Carousel Wrapper&ndash;&gt;-->
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="container" style="margin-top: 80px;">-->
+    <!--<h2 class="text-primary text-center text-uppercase mb-5">Accueil Gestion Hopital</h2>-->
+    <!--<div class="row col-md-12">-->
+        <!--<div class="col-md-3" mwlDroppable (drop)="externalDrop($event.dropData.event)" dragOverClass="drag-over">-->
+            <!--<div class="card">-->
+                <!--<button class="btn btn-primary" [hidden]="viewRdv" (click)="getMesRdv()"> Voir RDV</button>-->
+                <!--<p [hidden]="!viewRdv" *ngIf="externalEvents.length === 0"><em>No events added</em></p>-->
+
+                <!--<ul>-->
+                    <!--<li class="ml-5"-->
+                            <!--*ngFor="let event of externalEvents"-->
+                            <!--mwlDraggable-->
+                            <!--[dropData]="{event: event}"-->
+                            <!--dragActiveClass="drag-active"-->
+                    <!--&gt;-->
+                        <!--<a href="javascript:void(0);" [style.color]="event.color.primary">-->
+                            <!--{{ event.title }}-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-9">-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-12 text-center">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-4 align-item-center">-->
+                            <!--<div class="btn-group">-->
+                                <!--<button-->
+                                        <!--class="btn btn-primary"-->
+                                        <!--mwlCalendarPreviousView-->
+                                        <!--[view]="view"-->
+                                        <!--[(viewDate)]="viewDate"-->
+                                        <!--(click)="decrement()"-->
+                                        <!--[disabled]="prevBtnDisabled"-->
+                                <!--&gt;-->
+                                    <!--Prev-->
+                                <!--</button>-->
+                                <!--<button-->
+                                        <!--class="btn btn-secondary"-->
+                                        <!--mwlCalendarToday-->
+                                        <!--[(viewDate)]="viewDate"-->
+                                        <!--(click)="today()"-->
+                                <!--&gt;-->
+                                    <!--JJ-->
+                                <!--</button>-->
+                                <!--<button-->
+                                        <!--class="btn btn-primary"-->
+                                        <!--mwlCalendarNextView-->
+                                        <!--[view]="view"-->
+                                        <!--[(viewDate)]="viewDate"-->
+                                        <!--(click)="increment()"-->
+                                        <!--[disabled]="nextBtnDisabled"-->
+                                <!--&gt;-->
+                                    <!--Next-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-4 text-center">-->
+                            <!--<h5 class="text-center">-->
+                                <!--{{ viewDate | calendarDate:(view + 'ViewTitle'):locale:weekStartsOn }}-->
+                            <!--</h5>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-4 align-items-center">-->
+                            <!--<div class="btn-group">-->
+                                <!--<button-->
+                                        <!--class="btn btn-primary"-->
+                                        <!--(click)="setView(CalendarView.Month)"-->
+                                        <!--[class.active]="view === CalendarView.Month"-->
+                                <!--&gt;-->
+                                    <!--Mois-->
+                                <!--</button>-->
+                                <!--<button-->
+                                        <!--class="btn btn-primary"-->
+                                        <!--(click)="setView(CalendarView.Week)"-->
+                                        <!--[class.active]="view === CalendarView.Week"-->
+                                <!--&gt;-->
+                                    <!--Semaine-->
+                                <!--</button>-->
+                                <!--<button-->
+                                        <!--class="btn btn-primary"-->
+                                        <!--(click)="setView(CalendarView.Day)"-->
+                                        <!--[class.active]="view === CalendarView.Day"-->
+                                <!--&gt;-->
+                                    <!--Jour-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<br/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-12" style="overflow: hidden" [ngSwitch]="view">-->
+                    <!--<mwl-calendar-month-view class="text-danger"-->
+                                             <!--*ngSwitchCase="'month'"-->
+                                             <!--[viewDate]="viewDate"-->
+                                             <!--[events]="events"-->
+                                             <!--[locale]="locale"-->
+                                             <!--[weekStartsOn]="weekStartsOn"-->
+                                             <!--[weekendDays]="weekendDays"-->
+                                             <!--(dayClicked)="viewDate = $event.day.date; view = 'day'"-->
+                                             <!--(beforeViewRender)="beforeMonthViewRender($event)"-->
+
+                    <!--&gt;-->
+                    <!--</mwl-calendar-month-view>-->
+                    <!--<mwl-calendar-week-view class="text-danger font-weight-bold"-->
+                                            <!--*ngSwitchCase="'week'"-->
+                                            <!--[viewDate]="viewDate"-->
+                                            <!--[events]="events"-->
+                                            <!--[locale]="locale"-->
+                                            <!--[weekStartsOn]="weekStartsOn"-->
+                                            <!--[weekendDays]="weekendDays"-->
+                                            <!--(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'"-->
+                                            <!--[dayStartHour]="8"-->
+                                            <!--[dayEndHour]="17"-->
+                                            <!--(eventClicked)="eventClicked($event)"-->
+                    <!--&gt;-->
+                    <!--</mwl-calendar-week-view>-->
+                    <!--<mwl-calendar-day-view class="text-danger"-->
+                                           <!--*ngSwitchCase="'day'"-->
+                                           <!--[viewDate]="viewDate"-->
+                                           <!--[events]="events"-->
+                                           <!--[locale]="locale"-->
+                                           <!--[dayStartHour]="8"-->
+                                           <!--[dayEndHour]="17"-->
+                                           <!--[refresh]="refresh"-->
+                                           <!--(eventClicked)="eventClicked($event)"-->
+                                           <!--[snapDraggedEvents]="true"-->
+                                           <!--(eventTimesChanged)="eventDropped($event)">-->
+                    <!--</mwl-calendar-day-view>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
